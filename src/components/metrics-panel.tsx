@@ -3,7 +3,14 @@
 import { useAppContext } from '@/context/AppContext';
 import { MetricCard } from './metric-card';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
-import { Scale } from 'lucide-react';
+import { Scale, Info } from 'lucide-react';
+import Link from 'next/link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 export function MetricsPanel() {
   const { messages } = useAppContext();
@@ -32,26 +39,40 @@ export function MetricsPanel() {
   const { metrics } = lastAssistantMessageWithMetrics;
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold tracking-tight">Response Analysis</h2>
-      <MetricCard
-        name="Faithfulness"
-        score={metrics.faithfulness}
-        explanation="Does the answer contradict the source documents?"
-        linkTo="/faithfulness"
-      />
-      <MetricCard
-        name="Answer Relevance"
-        score={metrics.answerRelevance}
-        explanation="Is the answer relevant to the user's question?"
-        linkTo="/answer-relevance"
-      />
-      <MetricCard
-        name="Context Relevance"
-        score={metrics.contextRelevance}
-        explanation="Are retrieved documents relevant to the question?"
-        linkTo="/context-relevance"
-      />
-    </div>
+    <TooltipProvider>
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold tracking-tight">NutrientNet Performance</h2>
+          <Tooltip delayDuration={100}>
+            <TooltipTrigger asChild>
+              <Link href="https://arxiv.org/abs/2309.08655" target="_blank">
+                <Info className="h-4 w-4 text-muted-foreground cursor-pointer" />
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Metrics based on the RAGAs paper.</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+        <MetricCard
+          name="Faithfulness"
+          score={metrics.faithfulness}
+          explanation="Does the answer contradict the source documents?"
+          linkTo="/faithfulness"
+        />
+        <MetricCard
+          name="Answer Relevance"
+          score={metrics.answerRelevance}
+          explanation="Is the answer relevant to the user's question?"
+          linkTo="/answer-relevance"
+        />
+        <MetricCard
+          name="Context Relevance"
+          score={metrics.contextRelevance}
+          explanation="Are retrieved documents relevant to the question?"
+          linkTo="/context-relevance"
+        />
+      </div>
+    </TooltipProvider>
   );
 }
