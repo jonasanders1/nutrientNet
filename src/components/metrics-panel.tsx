@@ -73,6 +73,9 @@ export function MetricsPanel() {
             explanation="Are retrieved documents relevant to the question?"
             linkTo="/context-relevance"
           />
+          <p className='text-xs text-muted-foreground'>
+            Based on the <a href="https://arxiv.org/abs/2309.08655" className='text-[#008cff] hover:underline' target="_blank" rel="noopener noreferrer">Ragas framework</a>, which provides automated evaluation metrics for RAG systems across retrieval quality, generation faithfulness, and overall response relevance.
+          </p>
         </div>
       </div>
     </TooltipProvider>
