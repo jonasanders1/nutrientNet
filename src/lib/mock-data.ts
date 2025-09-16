@@ -30,12 +30,14 @@ export const MOCK_USER_MESSAGE: Message = {
   id: 'user-1',
   role: 'user',
   content: "What's a good diet for high energy and iron levels?",
+  timestamp: new Date(Date.now() - 60000 * 5).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
 };
 
 export const MOCK_ASSISTANT_MESSAGE: Message = {
   id: 'assistant-1',
   role: 'assistant',
   content: "For high energy and iron levels, a balanced diet is key. B-vitamins are crucial for energy metabolism, and you can find them in whole grains and legumes. Spinach is a great source of iron, and pairing it with foods rich in Vitamin C, like citrus fruits, will enhance iron absorption.",
+  timestamp: new Date(Date.now() - 60000 * 4).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   metrics: {
     faithfulness: 0.75,
     answerRelevance: 0.91,

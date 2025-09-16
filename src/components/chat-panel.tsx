@@ -32,6 +32,7 @@ export function ChatPanel() {
       id: `user-${Date.now()}`,
       role: 'user',
       content: input,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     
     setMessages((prev) => [...prev, userMessage]);
@@ -52,6 +53,7 @@ export function ChatPanel() {
         const assistantMessage: Message = {
           ...MOCK_ASSISTANT_MESSAGE,
           id: `assistant-${Date.now()}`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
         setMessages((prev) => [...prev, assistantMessage]);
         setIsLoading(false);
@@ -75,7 +77,7 @@ export function ChatPanel() {
         {messages.map((message) => (
           <ChatMessage key={message.id} message={message} />
         ))}
-        {isLoading && <ChatMessage message={{ id: 'loading', role: 'assistant', content: '...' }} />}
+        {isLoading && <ChatMessage message={{ id: 'loading', role: 'assistant', content: '...', timestamp: '' }} />}
       </div>
       <form onSubmit={handleSubmit} className="relative mt-4 flex-shrink-0">
         <Textarea
