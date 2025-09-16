@@ -14,7 +14,7 @@ export default function Home() {
         <div className="flex flex-col gap-4 overflow-y-auto p-4 pr-2">
           <ChatPanel />
         </div>
-        <div className="hidden md:flex flex-col gap-6 overflow-y-auto border-l border-border w-[320px] p-4 bg-[#0f171b]">
+        <div className="hidden md:flex flex-col gap-6 overflow-y-auto border-l border-border w-[320px] lg:w-[384px] p-4 bg-[#0f171b]">
           <MetricsPanel />
         </div>
         <div className="md:hidden fixed bottom-4 right-4 z-20">
