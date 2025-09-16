@@ -14,8 +14,8 @@ export function ChatMessage({ message }: { message: Message }) {
             <div className="flex items-baseline justify-between">
                 <div className="font-semibold text-sm">{modelName}</div>
             </div>
-            <div className="flex-1 rounded-lg bg-secondary p-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="flex-1 rounded-lg p-4 text-[#a8a7cb]">
+                <div className="flex items-center gap-2 text-sm">
                     <Loader className="animate-spin h-4 w-4" />
                     <span>Thinking...</span>
                 </div>
@@ -31,7 +31,7 @@ export function ChatMessage({ message }: { message: Message }) {
           'max-w-[80%] rounded-lg px-4 py-3 shadow-sm',
           isUser
             ? 'bg-primary text-primary-foreground self-end'
-            : 'bg-secondary self-start'
+            : 'self-start'
         )}
       >
         <div className="flex items-baseline justify-between gap-4 mb-2">
@@ -42,7 +42,12 @@ export function ChatMessage({ message }: { message: Message }) {
                 {message.timestamp}
             </div>
         </div>
-        <p className="whitespace-pre-wrap font-code text-sm leading-relaxed">{message.content}</p>
+        <p className={cn(
+            "whitespace-pre-wrap font-code text-sm leading-relaxed",
+            isUser ? "text-white" : "text-[#a8a7cb]"
+        )}>
+            {message.content}
+        </p>
       </div>
     </div>
   );

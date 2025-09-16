@@ -84,7 +84,7 @@ export function ChatPanel() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask about nutrition..."
-          className="pr-16 py-3 text-base font-code"
+          className="pr-16 py-3 text-base font-code bg-[#151b21] border-border"
           rows={2}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
