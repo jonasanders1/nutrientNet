@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
       <AppHeader />
-      <main className="flex-1 grid md:grid-cols-[1fr,320px] gap-4 lg:gap-8 p-4 overflow-hidden">
-        <div className="flex flex-col gap-4 overflow-y-auto pr-2">
+      <main className="flex-1 grid md:grid-cols-[1fr_auto] overflow-hidden">
+        <div className="flex flex-col gap-4 overflow-y-auto p-4 pr-2">
           <ChatPanel />
         </div>
-        <div className="hidden md:flex flex-col gap-6 overflow-y-auto">
+        <div className="hidden md:flex flex-col gap-6 overflow-y-auto border-l border-border w-[320px] p-4">
           <MetricsPanel />
         </div>
         <div className="md:hidden fixed bottom-4 right-4 z-20">

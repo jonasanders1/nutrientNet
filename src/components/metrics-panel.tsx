@@ -54,24 +54,26 @@ export function MetricsPanel() {
             </TooltipContent>
           </Tooltip>
         </div>
-        <MetricCard
-          name="Faithfulness"
-          score={metrics.faithfulness}
-          explanation="Does the answer contradict the source documents?"
-          linkTo="/faithfulness"
-        />
-        <MetricCard
-          name="Answer Relevance"
-          score={metrics.answerRelevance}
-          explanation="Is the answer relevant to the user's question?"
-          linkTo="/answer-relevance"
-        />
-        <MetricCard
-          name="Context Relevance"
-          score={metrics.contextRelevance}
-          explanation="Are retrieved documents relevant to the question?"
-          linkTo="/context-relevance"
-        />
+        <div className='flex flex-col gap-3'>
+          <MetricCard
+            name="Faithfulness"
+            score={metrics.faithfulness}
+            explanation="Does the answer contradict the source documents?"
+            linkTo="/faithfulness"
+          />
+          <MetricCard
+            name="Answer Relevance"
+            score={metrics.answerRelevance}
+            explanation="Is the answer relevant to the user's question?"
+            linkTo="/answer-relevance"
+          />
+          <MetricCard
+            name="Context Relevance"
+            score={metrics.contextRelevance}
+            explanation="Are retrieved documents relevant to the question?"
+            linkTo="/context-relevance"
+          />
+        </div>
       </div>
     </TooltipProvider>
   );
