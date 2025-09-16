@@ -4,7 +4,7 @@ import { AppProvider } from '@/context/AppContext';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Nutribot',
+  title: 'NutrientNet',
   description: 'An IDE-like chat interface to analyze LLM metrics.',
 };
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { useAppContext } from '@/context/AppContext';
-import { BrainCircuit } from 'lucide-react';
 
 export function AppHeader() {
   const { modelName, modelStatus } = useAppContext();
@@ -10,8 +9,7 @@ export function AppHeader() {
   return (
     <header className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
       <div className="flex items-center gap-2">
-        <BrainCircuit className="text-primary h-6 w-6" />
-        <h1 className="text-xl font-bold text-foreground">Nutribot</h1>
+        <h1 className="text-xl font-bold text-foreground">NutrientNet</h1>
       </div>
       <div className="flex items-center gap-3">
         <span className="text-sm text-muted-foreground hidden sm:inline">{modelName}</span>
