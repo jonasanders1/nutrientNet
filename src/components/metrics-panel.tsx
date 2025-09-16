@@ -1,24 +1,27 @@
-'use client';
+"use client";
 
-import { useAppContext } from '@/context/AppContext';
-import { MetricCard } from './metric-card';
-import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
-import { Scale, Info } from 'lucide-react';
-import Link from 'next/link';
+import { useAppContext } from "@/context/AppContext";
+import { MetricCard } from "./metric-card";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Scale, Info } from "lucide-react";
+import Link from "next/link";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from "@/components/ui/tooltip";
 
 export function MetricsPanel() {
   const { messages } = useAppContext();
   const lastAssistantMessageWithMetrics = [...messages]
     .reverse()
-    .find((msg) => msg.role === 'assistant' && msg.metrics);
+    .find((msg) => msg.role === "assistant" && msg.metrics);
 
-  if (!lastAssistantMessageWithMetrics || !lastAssistantMessageWithMetrics.metrics) {
+  if (
+    !lastAssistantMessageWithMetrics ||
+    !lastAssistantMessageWithMetrics.metrics
+  ) {
     return (
       <Card className="h-full flex flex-col items-center justify-center text-center bg-secondary border-dashed">
         <CardHeader>
@@ -42,7 +45,7 @@ export function MetricsPanel() {
     <TooltipProvider>
       <div className="space-y-6">
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-semibold tracking-tight">NutrientNet Performance</h2>
+          <h2 className="text-xl font-semibold tracking-tight">Performance</h2>
           <Tooltip delayDuration={100}>
             <TooltipTrigger asChild>
               <Link href="https://arxiv.org/abs/2309.08655" target="_blank">
@@ -54,7 +57,7 @@ export function MetricsPanel() {
             </TooltipContent>
           </Tooltip>
         </div>
-        <div className='flex flex-col gap-3'>
+        <div className="flex flex-col gap-3">
           <MetricCard
             name="Faithfulness"
             score={metrics.faithfulness}
@@ -73,8 +76,19 @@ export function MetricsPanel() {
             explanation="Are retrieved documents relevant to the question?"
             linkTo="/context-relevance"
           />
-          <p className='text-xs text-muted-foreground'>
-            Based on the <a href="https://arxiv.org/abs/2309.08655" className='text-[#008cff] hover:underline' target="_blank" rel="noopener noreferrer">Ragas framework</a>, which provides automated evaluation metrics for RAG systems across retrieval quality, generation faithfulness, and overall response relevance.
+          <p className="text-xs text-muted-foreground">
+            Based on the{" "}
+            <a
+              href="https://arxiv.org/abs/2309.08655"
+              className="text-[#008cff] hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ragas framework
+            </a>
+            , which provides automated evaluation metrics for RAG systems across
+            retrieval quality, generation faithfulness, and overall response
+            relevance.
           </p>
         </div>
       </div>

@@ -1,6 +1,12 @@
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ChevronRight } from 'lucide-react';
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { ChevronRight } from "lucide-react";
 
 interface MetricCardProps {
   name: string;
@@ -9,15 +15,22 @@ interface MetricCardProps {
   linkTo: string;
 }
 
-export function MetricCard({ name, score, explanation, linkTo }: MetricCardProps) {
+export function MetricCard({
+  name,
+  score,
+  explanation,
+  linkTo,
+}: MetricCardProps) {
   return (
     <Link href={linkTo} className="group">
-      <Card className="hover:border-primary/50 hover:bg-secondary/50 transition-colors">
+      <Card className="hover:border-primary/50 bg-background hover:bg-background/50 transition-colors">
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
             <div>
               <CardTitle className="text-base font-medium">{name}</CardTitle>
-              <CardDescription className="text-sm mt-1">{explanation}</CardDescription>
+              <CardDescription className="text-sm mt-1">
+                {explanation}
+              </CardDescription>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 flex-shrink-0 mt-1" />
           </div>
