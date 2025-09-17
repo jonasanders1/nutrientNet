@@ -1,7 +1,20 @@
-'use client';
-import { MetricDetails } from '@/lib/types';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+"use client";
+import { MetricDetails } from "@/lib/types";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 export function AnswerRelevanceDetail({ details }: { details: MetricDetails }) {
   return (
@@ -10,7 +23,8 @@ export function AnswerRelevanceDetail({ details }: { details: MetricDetails }) {
         <CardHeader>
           <CardTitle>Generated Questions vs. Original Answer</CardTitle>
           <CardDescription>
-            These questions were generated from the assistant's answer. Their similarity to your original question indicates relevance.
+            These questions were generated from the assistant's answer. Their
+            similarity to your original question indicates relevance.
           </CardDescription>
         </CardHeader>
         <CardContent>

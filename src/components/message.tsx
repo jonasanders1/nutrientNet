@@ -42,7 +42,7 @@ export function ChatMessage({ message }: { message: Message }) {
               <span className="">Thinking...</span>
             </div>
           ) : (
-            <p>{message.content}</p>
+            <span>{message.content}</span>
           )}
         </p>
       </div>
