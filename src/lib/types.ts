@@ -6,6 +6,35 @@ export interface Message {
   metrics?: Metrics;
 }
 
+export interface Source {
+  name: string;
+  filename: string;
+  path: string;
+  type: string;
+}
+
+// Backend API types
+export interface HealthResponse {
+  status: string; // e.g., "healthy" | "model_not_loaded"
+  model_loaded: boolean;
+}
+
+export interface DocumentResponse{
+  name: string;
+  filename: string;
+  path: string;
+  type: string;
+}
+
+export interface ChatRequest {
+  messages: Message[];
+  n_results?: number;
+}
+
+export interface ChatResponse {
+  message: Message;
+}
+
 export interface Metrics {
   faithfulness: number;
   answerRelevance: number;

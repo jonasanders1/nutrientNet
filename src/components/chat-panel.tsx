@@ -5,14 +5,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ChatMessage } from "@/components/message";
 import { ArrowUp } from "lucide-react";
-import { MOCK_ASSISTANT_MESSAGE } from "@/lib/mock-data";
 import { useToast } from "@/hooks/use-toast";
-import type { Message } from "@/lib/types";
+import EmptyDisplayMessage from "./EmptyDisplayMessage";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 
 export function ChatPanel() {
-  const { messages, setMessages } = useAppContext();
+  const { messages, sendMessage, modelStatus, isEvaluating, setIsEvaluating } =
+    useAppContext();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -27,67 +27,56 @@ export function ChatPanel() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-
-    setIsLoading(true);
-    const userMessage: Message = {
-      id: `user-${Date.now()}`,
-      role: "user",
-      content: input,
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-
-    try {
-      // Simulate API call
-      setTimeout(() => {
-        const assistantMessage: Message = {
-          ...MOCK_ASSISTANT_MESSAGE,
-          id: `assistant-${Date.now()}`,
-          timestamp: new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 1500);
-    } catch (error) {
-      console.error("Error enhancing prompt or fetching response:", error);
+    if (modelStatus !== "Running") {
       toast({
         variant: "destructive",
-        title: "An error occurred",
-        description: "Could not get a response. Please try again.",
+        title: "Backend not available",
+        description: "Model is not running. Check the RAG server.",
       });
-      setMessages((prev) => prev.filter((m) => m.id !== userMessage.id));
+      return;
+    }
+
+    setIsLoading(true);
+    const currentInput = input;
+    setInput("");
+    try {
+      await sendMessage(currentInput);
+    } catch (error) {
+      console.error("Chat error:", error);
+      toast({
+        variant: "destructive",
+        title: "Chat failed",
+        description: error instanceof Error ? error.message : "Unknown error",
+      });
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col h-full">
-      <div
-        ref={scrollAreaRef}
-        className="flex-1 space-y-6 overflow-y-auto rounded-lg md:p-3 lg:p-4"
-      >
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-        {isLoading && (
-          <ChatMessage
-            message={{
-              id: "loading",
-              role: "assistant",
-              content: "...",
-              timestamp: "",
-            }}
-          />
-        )}
-      </div>
+      {messages.length == 0 ? (
+        <EmptyDisplayMessage />
+      ) : (
+        <div
+          ref={scrollAreaRef}
+          className="flex-1 space-y-6 overflow-y-auto rounded-lg md:p-3 lg:p-4"
+        >
+          {messages.map((message) => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+          {isLoading && (
+            <ChatMessage
+              message={{
+                id: "loading",
+                role: "assistant",
+                content: "...",
+                timestamp: "",
+              }}
+            />
+          )}
+        </div>
+      )}
       <form
         onSubmit={handleSubmit}
         className="relative md:mt-4 flex-shrink-0 bg-[#23262d] border border-border rounded-lg focus-within:border-[#697077] m-2 md:m-3 lg:m-4"
@@ -112,7 +101,8 @@ export function ChatPanel() {
           <FormControlLabel
             control={
               <Switch
-                defaultChecked
+                onChange={() => setIsEvaluating((prev) => !prev)}
+                checked={isEvaluating}
                 sx={{
                   "& .MuiSwitch-switchBase.Mui-checked": {
                     color: "hsl(var(--accent))",

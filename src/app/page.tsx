@@ -2,9 +2,6 @@
 import { AppHeader } from "@/components/app-header";
 import { ChatPanel } from "@/components/chat-panel";
 import { MetricsPanel } from "@/components/metrics-panel";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { PanelRight } from "lucide-react";
 
 export default function Home() {
   return (

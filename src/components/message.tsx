@@ -7,6 +7,12 @@ import { useAppContext } from "@/context/AppContext";
 export function ChatMessage({ message }: { message: Message }) {
   const { modelName } = useAppContext();
   const isUser = message.role === "user";
+  const formattedTime = (() => {
+    // Try ISO or any date string
+    const date = new Date(message.timestamp);
+    if (isNaN(date.getTime())) return message.timestamp;
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  })();
 
   return (
     <div className={cn("flex flex-col gap-1 p-3 md:p-0")}>
@@ -28,7 +34,7 @@ export function ChatMessage({ message }: { message: Message }) {
               isUser ? "text-primary-foreground/70" : "text-muted-foreground"
             )}
           >
-            {message.timestamp}
+            {formattedTime}
           </div>
         </div>
         <p
@@ -37,10 +43,10 @@ export function ChatMessage({ message }: { message: Message }) {
           )}
         >
           {message.content === "..." ? (
-            <div className="flex items-center gap-2 text-sm animate-pulse">
+            <span className="flex items-center gap-2 text-sm animate-pulse">
               <Loader className="animate-spin h-4 w-4" />
               <span className="">Thinking...</span>
-            </div>
+            </span>
           ) : (
             <span>{message.content}</span>
           )}
