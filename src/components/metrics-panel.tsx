@@ -14,38 +14,31 @@ import {
 
 export function MetricsPanel() {
   const { messages } = useAppContext();
+
   const lastAssistantMessageWithMetrics = [...messages]
     .reverse()
     .find((msg) => msg.role === "assistant" && msg.metrics);
 
-  if (
-    !lastAssistantMessageWithMetrics ||
-    !lastAssistantMessageWithMetrics.metrics
-  ) {
-    return (
-      <Card className="h-full flex flex-col items-center justify-center text-center bg-secondary border-dashed">
-        <CardHeader>
-          <div className="mx-auto bg-muted p-3 rounded-full">
-            <Scale className="h-8 w-8 text-muted-foreground" />
-          </div>
-        </CardHeader>
-        <CardContent>
-          <CardTitle className="text-lg">Awaiting Analysis</CardTitle>
-          <p className="text-muted-foreground mt-2 max-w-xs">
-            Metrics will appear here once a response is generated.
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  const { metrics } = lastAssistantMessageWithMetrics;
+  // Use metrics if available, otherwise default to 0 scores
+  const metrics = lastAssistantMessageWithMetrics?.metrics || {
+    faithfulness: 0,
+    answerRelevance: 0,
+    contextRelevance: 0,
+    details: {
+      statements: [],
+      generatedQuestions: [],
+      extractedContextSentences: [],
+      context: [],
+    },
+  };
 
   return (
     <TooltipProvider>
       <div className="space-y-6">
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-semibold tracking-tight">Performance</h2>
+          <h2 className="text-xl font-semibold tracking-tight">
+            RAG Evaluation
+          </h2>
           <Tooltip delayDuration={100}>
             <TooltipTrigger asChild>
               <Link href="https://arxiv.org/abs/2309.08655" target="_blank">

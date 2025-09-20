@@ -21,10 +21,7 @@ interface AppState {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   modelStatus: "Running" | "Stopped";
   modelName: string;
-  sendMessage: (
-    content: string,
-    options?: { nResults?: number }
-  ) => Promise<void>;
+  sendMessage: (content: string) => Promise<void>;
 }
 
 const AppContext = createContext<AppState | undefined>(undefined);
@@ -36,7 +33,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
   const [modelName] = useState<string>("Llama 3.1 8B Instruct (Q4)");
   const [sources, setSources] = useState<Source[]>([]);
-  const [isEvaluating, setIsEvaluating] = useState<boolean>(false);
+  const [isEvaluating, setIsEvaluating] = useState<boolean>(true);
 
   // Poll backend health
   useEffect(() => {
@@ -62,7 +59,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const sendMessage = useCallback(
-    async (content: string, options?: { nResults?: number }) => {
+    async (content: string) => {
       const userMessage: Message = {
         id: `user-${Date.now()}`,
         role: "user",
@@ -74,7 +71,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const base = Array.isArray(messages) ? messages : [];
         const payload: ChatRequest = {
           messages: [...base, userMessage],
-          n_results: options?.nResults,
+          isEvaluating,
         };
         const { message } = await postChat(payload);
         setMessages((prev) => [...prev, message]);
@@ -84,7 +81,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         throw error;
       }
     },
-    [messages]
+    [messages, isEvaluating]
   );
 
   const value = useMemo(

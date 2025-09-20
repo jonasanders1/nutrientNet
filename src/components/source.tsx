@@ -13,23 +13,16 @@ const Source = ({ name, filename, path, type }: SourceProps) => {
     type === "PDF" ? FileText : type === "HTML" ? FileCode : FileCode;
 
   return (
-    <div className="flex items-center gap-2 bg-[#4d4857aa] hover:bg-[#645f6daa] rounded-full pr-3 overflow-hidden">
-      <div
-        className={`h-8 w-8 flex justify-center items-center ${
-          type === "PDF" ? "bg-[#4073ff]" : "bg-[#ff4d40]"
-        } pl-1`}
-      >
-        <Icon className="h-5 w-5 text-white" />
-      </div>
-      <a
-        href={path}
-        target="_blank"
-        rel="noreferrer"
-        className="text-foreground"
-      >
-        {name}
-      </a>
-    </div>
+    <a
+      href={path}
+      target="_blank"
+      rel="noreferrer"
+      className="text-muted-foreground flex items-center gap-2 hover:text-[#a0b4ce] hover:underline borderw-[fit-content] duration-200 group"
+    >
+      <Icon className="h-5 w-5 text-muted-foreground group-hover:text-[#a0b4ce] transition-colors" />
+
+      {name}
+    </a>
   );
 };
 

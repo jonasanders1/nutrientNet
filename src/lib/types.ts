@@ -28,7 +28,7 @@ export interface DocumentResponse{
 
 export interface ChatRequest {
   messages: Message[];
-  n_results?: number;
+  isEvaluating: boolean;
 }
 
 export interface ChatResponse {
